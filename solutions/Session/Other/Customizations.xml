@@ -12,6 +12,22 @@
   <CustomControls />
   <EntityDataProviders />
   <CanvasApps />
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="dxc_sharedapigeeauth5fedc23d9783888cd65f20995ea0c2417af6_40ae7">
+      <connectionreferencedisplayname>ApigeeAuth Session-40ae7</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_apigeeauth-5fedc23d9783888cd6-5f20995ea0c2417af6</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="dxc_sharedsharepointonline_a7703">
+      <connectionreferencedisplayname>SharePoint Session-a7703</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sharepointonline</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
   <Languages>
     <Language>1041</Language>
   </Languages>
