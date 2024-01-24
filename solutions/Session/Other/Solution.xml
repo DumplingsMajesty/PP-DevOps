@@ -80,6 +80,7 @@
     <RootComponents>
       <RootComponent type="29" id="{b169eb4a-95ba-ee11-a569-000d3a321055}" behavior="0" />
       <RootComponent type="300" schemaName="dxc_getsalaryyao_a60b4" behavior="0" />
+      <RootComponent type="300" schemaName="liu_sapermission_cc473" behavior="0" />
     </RootComponents>
     <MissingDependencies />
   </SolutionManifest>
