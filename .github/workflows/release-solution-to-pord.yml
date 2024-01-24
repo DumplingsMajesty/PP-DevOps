@@ -34,7 +34,7 @@ on:
 env:
 #edit your values here
   BUILD_ENVIRONMENT_URL: https://orgf7f4d45e.crm.dynamics.com/
-  PRODUCTION_ENVIRONMENT_URL: https://orgd1cd5059.crm.dynamics.com/
+  PRODUCTION_ENVIRONMENT_URL: https://supporttmcprod.crm.dynamics.com/
   USERNAME: ning.yao@dxc.com
 
 jobs:
