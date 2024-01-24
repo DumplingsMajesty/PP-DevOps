@@ -1,0 +1,144 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_apigeeauth-5fedc23d9783888cd6-5f20995ea0c2417af6": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "dxc_sharedapigeeauth5fedc23d9783888cd65f20995ea0c2417af6_40ae7"
+        },
+        "api": {
+          "name": "shared_apigeeauth-5fedc23d9783888cd6-5f20995ea0c2417af6"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "dxc_sharedsharepointonline_a7703"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "afbb0647-57e6-44f3-b436-88f8e2959a4f"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "number": {
+                  "title": "数",
+                  "type": "number",
+                  "x-ms-dynamically-added": true,
+                  "description": "数値を入力してください",
+                  "x-ms-content-hint": "NUMBER"
+                }
+              },
+              "required": [
+                "number"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "GetSalary": {
+          "runAfter": {
+            "Get_APIKey": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "243d693f-11eb-410b-92d3-c92a37513536"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_apigeeauth-5fedc23d9783888cd6-5f20995ea0c2417af6",
+              "connectionName": "shared_apigeeauth-5fedc23d9783888cd6-5f20995ea0c2417af6",
+              "operationId": "GetSalary"
+            },
+            "parameters": {
+              "apikey": "@outputs('Get_APIKey')?['body/APIKey']"
+            },
+            "authentication": {
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+              "type": "Raw"
+            }
+          }
+        },
+        "PowerApp_または_Flow_に応答する": {
+          "runAfter": {
+            "GetSalary": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ec7bca46-84ea-47d4-8b11-f333f3ba646a"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "salary": "@{body('GetSalary')}"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "salary": {
+                  "title": "Salary",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Get_APIKey": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "07e20c06-2d4c-4edd-8b57-7f62f355b036"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItem"
+            },
+            "parameters": {
+              "dataset": "https://dxcportal.sharepoint.com/sites/SupportTMC",
+              "table": "24dfa166-39fd-4fb7-9a8e-73d916ee32dd",
+              "id": "@triggerBody()['number']"
+            },
+            "authentication": {
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+              "type": "Raw"
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}
